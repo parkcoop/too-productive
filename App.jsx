@@ -6,74 +6,52 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  // Text,
-  StatusBar,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import AppNavigator from './src/routes';
-import * as eva from '@eva-design/eva';
+import React, { useReducer, useState } from "react";
+import AppNavigator from "./src/routes";
+import * as eva from "@eva-design/eva";
 // import { EvaIconsPack } from '@ui-kitten/eva-icons';
-
-import { ApplicationProvider, Button, Divider, Layout, Text, TopNavigation, IconRegistry } from '@ui-kitten/components';
+import { SessionContext, ThemeContext } from "./src/context";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
 const App = () => {
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "light" ? "dark" : "light";
+    setTheme(nextTheme);
+  };
+
+  const [session, dispatch] = useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case "SIGN_IN":
+          return {
+            ...prevState,
+            token: action.token,
+            user: action.user,
+          };
+        case "SIGN_OUT":
+          return {};
+        default:
+          throw new Error();
+      }
+    },
+    {
+      token: null,
+      user: null,
+    }
+  );
   return (
-    <ApplicationProvider {...eva} theme={eva.dark}>
-      <AppNavigator />
-    </ApplicationProvider>  
+    <ApplicationProvider {...eva} theme={eva[theme]}>
+      <IconRegistry icons={EvaIconsPack} />
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <SessionContext.Provider value={{ session, dispatch }}>
+          <AppNavigator />
+        </SessionContext.Provider>
+      </ThemeContext.Provider>
+    </ApplicationProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;

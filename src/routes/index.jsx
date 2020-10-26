@@ -1,37 +1,57 @@
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
+import React, { useContext } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   BottomNavigation,
   BottomNavigationTab,
+  Icon,
   Layout,
   Text,
-} from '@ui-kitten/components';
-import Dashboard from '../screens/Dashboard';
-import Notes from '../screens/Notes';
-import Reminders from '../screens/Reminders';
-import Login from '../screens/AuthScreen/Login';
+} from "@ui-kitten/components";
+import Dashboard from "../screens/Dashboard";
+import Notes from "../screens/Notes";
+import Reminders from "../screens/Reminders";
+import Settings from "../screens/Settings";
+import Login from "../screens/AuthScreen/Login";
+import { SessionContext } from "../context";
 
 const TabNavigator = createBottomTabNavigator();
 const Stack = createStackNavigator();
-const user = {};
 
-const BottomTabBar = ({navigation, state}) => (
+const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
+    style={{ height: 75, backgroundColor: "#CDCDCD" }}
+    // indicatorStyle={{ color: "red", backgroundColor: "red", height: 100 }}
     selectedIndex={state.index}
-    onSelect={(index) => navigation.navigate(state.routeNames[index])}>
-    <BottomNavigationTab title="DASHBOARD" />
-    <BottomNavigationTab title="NOTES" />
-    <BottomNavigationTab title="ORDERSD" />
+    onSelect={(index) => navigation.navigate(state.routeNames[index])}
+  >
+    <BottomNavigationTab
+      style={{ backgroundColor: "red", color: "white" }}
+      icon={(props) => <Icon {...props} fill="#8F9BB3" name="grid-outline" />}
+    />
+    <BottomNavigationTab
+      icon={(props) => (
+        <Icon {...props} fill="#8F9BB3" name="file-text-outline" />
+      )}
+    />
+    <BottomNavigationTab
+      icon={(props) => <Icon {...props} fill="#8F9BB3" name="bulb-outline" />}
+    />
+    <BottomNavigationTab
+      icon={(props) => (
+        <Icon {...props} fill="#8F9BB3" name="settings-outline" />
+      )}
+    />
   </BottomNavigation>
 );
 
 const InternalPages = () => (
   <TabNavigator.Navigator tabBar={(props) => <BottomTabBar {...props} />}>
-    <TabNavigator.Screen name="Users" component={Dashboard} />
+    <TabNavigator.Screen name="Dashboard" component={Dashboard} />
     <TabNavigator.Screen name="Notes" component={Notes} />
-    <TabNavigator.Screen name="Orders" component={Reminders} />
+    <TabNavigator.Screen name="Reminders" component={Reminders} />
+    <TabNavigator.Screen name="Settings" component={Settings} />
   </TabNavigator.Navigator>
 );
 
@@ -41,10 +61,13 @@ const ExternalPages = () => (
   </Stack.Navigator>
 );
 
-const AppNavigator = () => (
-  <NavigationContainer>
-    {!user?.token ? <InternalPages /> : <ExternalPages />}
-  </NavigationContainer>
-);
+const AppNavigator = () => {
+  const { session } = useContext(SessionContext);
+  return (
+    <NavigationContainer>
+      {session?.token ? <InternalPages /> : <ExternalPages />}
+    </NavigationContainer>
+  );
+};
 
 export default AppNavigator;
