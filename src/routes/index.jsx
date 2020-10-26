@@ -1,46 +1,50 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BottomNavigation, BottomNavigationTab, Layout, Text } from '@ui-kitten/components';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {
+  BottomNavigation,
+  BottomNavigationTab,
+  Layout,
+  Text,
+} from '@ui-kitten/components';
 import Dashboard from '../screens/Dashboard';
 import Notes from '../screens/Notes';
+import Reminders from '../screens/Reminders';
+import Login from '../screens/AuthScreen/Login';
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const TabNavigator = createBottomTabNavigator();
+const Stack = createStackNavigator();
+const user = {};
 
-const UsersScreen = () => (
-  <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text category='h1'>USERS</Text>
-  </Layout>
-);
-
-const OrdersScreen = () => (
-  <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text category='h1'>ORDERS</Text>
-  </Layout>
-);
-
-const BottomTabBar = ({ navigation, state }) => (
+const BottomTabBar = ({navigation, state}) => (
   <BottomNavigation
     selectedIndex={state.index}
-    onSelect={index => navigation.navigate(state.routeNames[index])}>
-    <BottomNavigationTab title='DASHBOARD'/>
-    <BottomNavigationTab title='NOTES'/>
-    <BottomNavigationTab title='NOTES'/>
+    onSelect={(index) => navigation.navigate(state.routeNames[index])}>
+    <BottomNavigationTab title="DASHBOARD" />
+    <BottomNavigationTab title="NOTES" />
+    <BottomNavigationTab title="ORDERSD" />
   </BottomNavigation>
 );
 
-const TabNavigator = () => (
-  <Navigator tabBar={props => <BottomTabBar {...props} />}>
-    <Screen name='Users' component={Dashboard}/>
-    <Screen name='Notes' component={Notes}/>
-    <Screen name='Orders' component={OrdersScreen}/>
-  </Navigator>
+const InternalPages = () => (
+  <TabNavigator.Navigator tabBar={(props) => <BottomTabBar {...props} />}>
+    <TabNavigator.Screen name="Users" component={Dashboard} />
+    <TabNavigator.Screen name="Notes" component={Notes} />
+    <TabNavigator.Screen name="Orders" component={Reminders} />
+  </TabNavigator.Navigator>
+);
+
+const ExternalPages = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Login" component={Login} />
+  </Stack.Navigator>
 );
 
 const AppNavigator = () => (
   <NavigationContainer>
-    <TabNavigator/>
+    {!user?.token ? <InternalPages /> : <ExternalPages />}
   </NavigationContainer>
 );
 
-export default AppNavigator
+export default AppNavigator;
