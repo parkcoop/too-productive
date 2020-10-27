@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import AppNavigator from "./src/routes";
 import * as eva from "@eva-design/eva";
 // import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -14,9 +14,12 @@ import { SessionContext, ThemeContext } from "./src/context";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import FlashMessage from "react-native-flash-message";
+import moment from "moment";
+import jwt_decode from "jwt-decode";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const App = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
@@ -26,12 +29,12 @@ const App = () => {
   const [session, dispatch] = useReducer(
     (prevState, action) => {
       switch (action.type) {
-        // case "REGISTER":
-        //   return {
-        //     ...prevState,
-        //     token: action.token,
-        //     user: action.user,
-        //   };
+        case "RESTORE_TOKEN":
+          return {
+            ...prevState,
+            token: action.token,
+            user: action.user,
+          };
         case "SIGN_IN":
           return {
             ...prevState,
@@ -39,8 +42,12 @@ const App = () => {
             user: action.user,
           };
         case "SIGN_OUT":
+          (async () => {
+            await AsyncStorage.removeItem("token");
+          })();
           return {};
         default:
+          return {};
           throw new Error();
       }
     },
@@ -49,6 +56,47 @@ const App = () => {
       user: null,
     }
   );
+
+  useEffect(() => {
+    const checkToken = async () => {
+      let user;
+      let userToken;
+      let tokenExpiration;
+      // await AsyncStorage.removeItem('userToken')
+      // await AsyncStorage.removeItem('tokenExpiration')
+
+      try {
+        userToken = await AsyncStorage.getItem("token");
+        tokenExpiration = await AsyncStorage.getItem("tokenExpiration");
+        console.log(
+          "Expires in: (minutes) ",
+          moment.unix(tokenExpiration).diff(moment(), "minutes")
+        );
+        if (
+          moment().diff(moment.unix(tokenExpiration), "minutes") > 0 ||
+          !tokenExpiration
+        ) {
+          await AsyncStorage.removeItem("token");
+          await AsyncStorage.removeItem("tokenExpiration");
+          userToken = null;
+        }
+      } catch (err) {
+        console.log("error retrieving token", err);
+      }
+      if (userToken && userToken !== "undefined") {
+        user = jwt_decode(userToken);
+        console.log("DECODED", user);
+      }
+      dispatch({
+        type: "RESTORE_TOKEN",
+        token: userToken,
+        user: user?.user,
+      });
+    };
+
+    checkToken();
+  }, []);
+
   return (
     <ApplicationProvider {...eva} theme={eva[theme]}>
       <IconRegistry icons={EvaIconsPack} />

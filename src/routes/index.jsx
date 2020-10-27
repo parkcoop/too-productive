@@ -21,7 +21,6 @@ const TabNavigator = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const BottomTabBar = ({ navigation, state }) => {
-  console.log(state);
   const { theme } = useContext(ThemeContext);
   return (
     <BottomNavigation

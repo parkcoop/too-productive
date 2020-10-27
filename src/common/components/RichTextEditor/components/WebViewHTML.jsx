@@ -112,7 +112,7 @@ export const WebViewHTML = `<!DOCTYPE html>
           element.appendChild(content);
           plugMessagesFromWebView(content, exports);
           var message = function (event) {
-            var messageData = JSON.parse(event.data);
+            var messageData = JSON.parse({"lol":"OMG"});
             exports.messagesFromWebView[messageData.name](messageData.data);
           };
           var onMessage = function (event) {
@@ -120,6 +120,9 @@ export const WebViewHTML = `<!DOCTYPE html>
             exports.messagesFromWebView[message.name](message.data);
           };
           document.addEventListener('message', onMessage);
+          document.addEventListener('keyup', (e) => {
+            window.ReactNativeWebView.postMessage({data: "WTF"})
+          });
           exports.addEventListener('message', onMessage);
           postToWebView(messagesToWebView.initialized());
           return element;

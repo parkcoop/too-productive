@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { showMessage } from 'react-native-flash-message'
 
 const signUp = ({ username, password, fullName }) => {
     console.log(username, password, fullName)
@@ -8,7 +9,7 @@ const signUp = ({ username, password, fullName }) => {
         fullName
     } )
     .then(res => Promise.resolve(res.data))
-    .catch(err => Promise.reject(err))
+    .catch(err => showMessage({type:'error', color:'white', backgroundColor: 'red', message:'Error logging in', description: err.response.data.msg}))
 }
 
 const login = ({ username, password }) => {
@@ -19,7 +20,7 @@ const login = ({ username, password }) => {
         password
     } )
     .then(res => Promise.resolve(res.data))
-    .catch(err => Promise.reject(err))
+    .catch(err => showMessage({type:'error', color:'white', backgroundColor: 'red', message:'Error logging in', description: err.response.data.msg}))
 }
 
 export {
