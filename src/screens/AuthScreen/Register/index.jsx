@@ -1,16 +1,20 @@
 import { Button, Input, Layout, Text } from "@ui-kitten/components";
 import React, { useState, useContext } from "react";
-import { showMessage } from "react-native-flash-message";
-import { login } from "../../../api";
+import { login, signUp } from "../../../api";
 import { SessionContext } from "../../../context";
 
-const Login = ({ navigation }) => {
+const Login = () => {
   let { dispatch, user } = useContext(SessionContext);
   let [username, setUsername] = useState();
   let [password, setPassword] = useState();
+  let [fullName, setFullName] = useState();
 
   return (
     <Layout style={{ flex: 1 }}>
+      <Layout style={{ margin: 15 }}>
+        <Text>Display Name</Text>
+        <Input value={fullName} onChangeText={(e) => setFullName(e)} />
+      </Layout>
       <Layout style={{ margin: 15 }}>
         <Text>Username</Text>
         <Input value={username} onChangeText={(e) => setUsername(e)} />
@@ -21,21 +25,13 @@ const Login = ({ navigation }) => {
       </Layout>
       <Button
         onPress={async () => {
-          // console.log("LLLL", username, password);
-          let user = await login({ username, password });
-          console.log("PLEASE", user);
-          // showMessage({ type: "error", message: " OMGF" });
-          dispatch({ type: "SIGN_IN", ...user });
+          console.log(username, "sign up");
+          let newUser = await signUp({ username, password, fullName });
+          dispatch({ type: "SIGN_IN", ...newUser });
+          console.log(newUser);
         }}
       >
         LOGIN
-      </Button>
-      <Button
-        onPress={async () => {
-          navigation.navigate("Register");
-        }}
-      >
-        Need an account? Register here
       </Button>
     </Layout>
   );

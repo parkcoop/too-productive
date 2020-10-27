@@ -13,6 +13,7 @@ import * as eva from "@eva-design/eva";
 import { SessionContext, ThemeContext } from "./src/context";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import FlashMessage from "react-native-flash-message";
 
 const App = () => {
   const [theme, setTheme] = useState("light");
@@ -25,6 +26,12 @@ const App = () => {
   const [session, dispatch] = useReducer(
     (prevState, action) => {
       switch (action.type) {
+        // case "REGISTER":
+        //   return {
+        //     ...prevState,
+        //     token: action.token,
+        //     user: action.user,
+        //   };
         case "SIGN_IN":
           return {
             ...prevState,
@@ -48,6 +55,7 @@ const App = () => {
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
         <SessionContext.Provider value={{ session, dispatch }}>
           <AppNavigator />
+          <FlashMessage position="top" />
         </SessionContext.Provider>
       </ThemeContext.Provider>
     </ApplicationProvider>
