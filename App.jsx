@@ -21,9 +21,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const App = () => {
   const [theme, setTheme] = useState("dark");
 
-  const toggleTheme = () => {
+  const toggleTheme = async () => {
     const nextTheme = theme === "light" ? "dark" : "light";
     setTheme(nextTheme);
+    await AsyncStorage.setItem("theme", nextTheme);
   };
 
   const [session, dispatch] = useReducer(
@@ -68,6 +69,8 @@ const App = () => {
       try {
         userToken = await AsyncStorage.getItem("token");
         tokenExpiration = await AsyncStorage.getItem("tokenExpiration");
+        let theme = await AsyncStorage.getItem("theme");
+        if (theme) setTheme(theme);
         console.log(
           "Expires in: (minutes) ",
           moment.unix(tokenExpiration).diff(moment(), "minutes")
