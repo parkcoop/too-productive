@@ -50,85 +50,16 @@ export const WebViewHTML = `<!DOCTYPE html>
   </head>
   <body>
   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is your notepad</p>
-    <div class="editor"></div>
+  <p id="LOL">WTF DID YOUI SAY TO ME</p>
+  <button onclick="lol("LOL")">LOLOLOL</button>
+  <script>
+
+    <div id="editor" class="editor"></div>
     <script>
-      (function (exports) {
-        var editor = null;
-        var postToWebView = function (data) {
-          if (
-            data !== null &&
-            typeof data !== 'undefined' &&
-            window.ReactNativeWebView &&
-            typeof window.ReactNativeWebView.postMessage === 'function'
-          ) {
-            window.ReactNativeWebView.postMessage(JSON.stringify(data));
-          }
-        };
-        var messagesToWebView = (function () {
-          var initialized = function () {
-            return {name: 'initialized'};
-          };
-          var returnHtml = function (data) {
-            return {name: 'returnHtml', data: data};
-          };
-          return {initialized: initialized, returnHtml: returnHtml};
-        })();
-        var plugMessagesFromWebView = function (content, exports) {
-          var setHtml = (html) => {
-            content.innerHTML = html;
-          };
-          var setPlaceholder = function (text) {
-            content.setAttribute('placeholder', text);
-          };
-          var getHtml = function () {
-            postToWebView(messagesToWebView.returnHtml(content.innerHTML));
-          };
-          var bold = function () {
-            document.execCommand('bold');
-          };
-          var italic = function () {
-            document.execCommand('italic');
-          };
-          var underline = function () {
-            document.execCommand('underline');
-          };
-          exports.messagesFromWebView = {
-            setHtml: setHtml,
-            setPlaceholder: setPlaceholder,
-            getHtml: getHtml,
-            bold: bold,
-            italic: italic,
-            underline: underline,
-          };
-        };
-        var init = function (element) {
-          var content = document.createElement('div');
-          content.contentEditable = true;
-          content.spellcheck = false;
-          content.autocapitalize = 'off';
-          content.autocorrect = 'off';
-          content.autocomplete = 'off';
-          content.className = 'content';
-          element.appendChild(content);
-          plugMessagesFromWebView(content, exports);
-          var message = function (event) {
-            var messageData = JSON.parse({"lol":"OMG"});
-            exports.messagesFromWebView[messageData.name](messageData.data);
-          };
-          var onMessage = function (event) {
-            var message = JSON.parse(event.data);
-            exports.messagesFromWebView[message.name](message.data);
-          };
-          document.addEventListener('message', onMessage);
-          document.addEventListener('keyup', (e) => {
-            window.ReactNativeWebView.postMessage({data: "WTF"})
-          });
-          exports.addEventListener('message', onMessage);
-          postToWebView(messagesToWebView.initialized());
-          return element;
-        };
-        editor = init(document.getElementsByClassName('editor')[0]);
-      })(window);
+    window.ReactNativeWebView.postMessage(JSON.stringify({LOL:"OMG"}));
+      function lol(message) {
+      }
+      lol("NICE")
     </script>
   </body>
 </html>

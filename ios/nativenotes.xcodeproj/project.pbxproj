@@ -58,6 +58,7 @@
 		2D02E47B1E0B4A5D006451C7 /* nativenotes-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nativenotes-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* nativenotes-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nativenotes-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C4D43BF6A182A19F980B02F /* libPods-nativenotes-nativenotesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-nativenotes-nativenotesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FFCDC68254B91C7001E7B97 /* nativenotes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = nativenotes.entitlements; path = nativenotes/nativenotes.entitlements; sourceTree = "<group>"; };
 		6C3FBA592A5433818485949F /* Pods-nativenotes-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nativenotes-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-nativenotes-tvOSTests/Pods-nativenotes-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		72ACB12B704ACDE7E5AF7553 /* Pods-nativenotes-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nativenotes-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-nativenotes-tvOSTests/Pods-nativenotes-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		75337505E8D50CD0B2DFEA45 /* libPods-nativenotes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-nativenotes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +126,7 @@
 		13B07FAE1A68108700A75B9A /* nativenotes */ = {
 			isa = PBXGroup;
 			children = (
+				4FFCDC68254B91C7001E7B97 /* nativenotes.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -194,7 +196,6 @@
 				6C3FBA592A5433818485949F /* Pods-nativenotes-tvOSTests.debug.xcconfig */,
 				72ACB12B704ACDE7E5AF7553 /* Pods-nativenotes-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -666,6 +667,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = nativenotes/nativenotes.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = nativenotes/Info.plist;
@@ -689,6 +691,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = nativenotes/nativenotes.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = nativenotes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
