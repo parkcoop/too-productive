@@ -1,29 +1,36 @@
 import { Button, Input, Layout, Text } from "@ui-kitten/components";
 import React, { useState, useContext } from "react";
-import { showMessage } from "react-native-flash-message";
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 import { login } from "../../../api";
 import { SessionContext } from "../../../context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 
-const Login = ({ navigation }) => {
-  let { dispatch, user } = useContext(SessionContext);
-  let [username, setUsername] = useState();
-  let [password, setPassword] = useState();
+interface LoginProps {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>
+}
+
+const Login: React.FC<LoginProps> = ({ navigation }) => {
+  let { dispatch } = useContext(SessionContext);
+  let [username, setUsername] = useState<string>('');
+  let [password, setPassword] = useState<string>('');
 
   return (
     <Layout style={{ flex: 1 }}>
       <Layout style={{ margin: 15 }}>
         <Text>Username</Text>
-        <Input value={username} onChangeText={(e) => setUsername(e)} />
+        <Input value={username} onChangeText={(value) => setUsername(value)} />
       </Layout>
       <Layout style={{ margin: 15 }}>
         <Text>Password</Text>
         <Input
           value={password}
-          password={true}
           secureTextEntry
-          onChangeText={(e) => setPassword(e)}
+          onChangeText={(value) => setPassword(value)}
         />
       </Layout>
       <Button

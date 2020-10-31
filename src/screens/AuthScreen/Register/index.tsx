@@ -1,13 +1,13 @@
 import { Button, Input, Layout, Text } from "@ui-kitten/components";
 import React, { useState, useContext } from "react";
-import { login, signUp } from "../../../api";
+import { signUp } from "../../../api";
 import { SessionContext } from "../../../context";
 
-const Login = () => {
-  let { dispatch, user } = useContext(SessionContext);
-  let [username, setUsername] = useState();
-  let [password, setPassword] = useState();
-  let [fullName, setFullName] = useState();
+const Register = () => {
+  let { dispatch } = useContext(SessionContext);
+  let [username, setUsername] = useState<string>('');
+  let [password, setPassword] = useState<string>('');
+  let [fullName, setFullName] = useState<string>('');
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -27,7 +27,7 @@ const Login = () => {
         onPress={async () => {
           console.log(username, "sign up");
           let newUser = await signUp({ username, password, fullName });
-          dispatch({ type: "SIGN_IN", ...newUser });
+          dispatch({ type: "SIGN_IN", token: newUser.token, user: newUser.user });
           console.log(newUser);
         }}
       >
@@ -37,4 +37,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

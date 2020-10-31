@@ -1,22 +1,24 @@
 import {
   Button,
-  Icon,
-  Input,
   Layout,
   Text,
-  useTheme,
 } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
-import { KeyboardAvoidingView, SafeAreaView } from "react-native";
-import Modal from "react-native-modal";
+import { SafeAreaView, ScrollView } from "react-native";
 import { SessionContext } from "../../context";
 import NewReminder from "./components/NewReminder";
 import { getReminders } from "../../api";
+import moment from "moment";
 
-const Reminders = () => {
-  const [reminders, setReminders] = useState([]);
-  const [newReminderOpen, setNewReminderOpen] = useState(false);
-  const theme = useTheme();
+interface Reminder {
+  reminderDate: string,
+  description: string,
+  userId?: string
+}
+
+const Reminders: React.FC = () => {
+  const [reminders, setReminders] = useState<Array<Reminder>>([]);
+  const [newReminderOpen, setNewReminderOpen] = useState<boolean>(false);
   const { session } = useContext(SessionContext);
 
   const getUpcomingReminders = async () => {
@@ -42,21 +44,26 @@ const Reminders = () => {
         >
           New reminder
         </Button>
-        {reminders?.map((reminder) => {
-          return (
-            <Layout
-              style={{
-                borderWidth: 1,
-                borderColor: "#CDCDCD",
-                margin: 10,
-                padding: 5,
-              }}
-            >
-              <Text>{reminder.reminderDate}</Text>
-              <Text>{reminder.description}</Text>
-            </Layout>
-          );
-        })}
+        <Text>Upcoming Reminders</Text>
+        <ScrollView>
+          {reminders?.map((reminder: Reminder) => {
+            return (
+              <Layout
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#CDCDCD",
+                  margin: 10,
+                  padding: 5,
+                }}
+              >
+                <Text>
+                  {moment(reminder.reminderDate).format("MM/DD/YY h:mma")}
+                </Text>
+                <Text>{reminder.description}</Text>
+              </Layout>
+            );
+          })}
+        </ScrollView>
       </SafeAreaView>
     </Layout>
   );

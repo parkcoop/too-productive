@@ -1,27 +1,25 @@
 import {
-  Button,
-  Icon,
   Input,
-  Layout,
-  Text,
   useTheme,
 } from "@ui-kitten/components";
 import React, { useState } from "react";
 import {
-  KeyboardAvoidingView,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import Modal from "react-native-modal";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
 
-const DatePicker = ({ setFieldValue, fieldValue }) => {
+interface DatePickerProps {
+  setFieldValue: React.Dispatch<React.SetStateAction<Date>>,
+  fieldValue: Date
+}
+
+const DatePicker: React.FC<DatePickerProps> = ({ setFieldValue, fieldValue }) => {
   // const [datePickerOpen, setDatePickerOpen] = useState(false);
   // const [description, setDescription] = useState();
   // const [reminderDate, setReminderDate] = useState();
-  const [visible, setVisible] = useState();
+  const [visible, setVisible] = useState<boolean>();
   const theme = useTheme();
 
   return (
@@ -51,14 +49,3 @@ const DatePicker = ({ setFieldValue, fieldValue }) => {
 };
 
 export default DatePicker;
-
-const styles = StyleSheet.create({
-  formElement: {
-    marginTop: 15,
-  },
-  label: {
-    marginBottom: 15,
-    fontSize: 18,
-  },
-  form: {},
-});

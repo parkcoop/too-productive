@@ -18,8 +18,24 @@ import moment from "moment";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const App = () => {
-  const [theme, setTheme] = useState("light");
+interface User {
+  _id: string,
+  username: string,
+  avatar: string
+}
+
+type Action = { 
+  type: string | null,
+  user: User | null,
+  token: string | null
+} 
+
+type State = {
+  token: string | null,
+  user: User | null
+}
+const App: React.FC = () => {
+  const [theme, setTheme] = useState<string>("light");
 
   const toggleTheme = async () => {
     const nextTheme = theme === "light" ? "dark" : "light";
@@ -27,31 +43,40 @@ const App = () => {
     await AsyncStorage.setItem("theme", nextTheme);
   };
 
-  const [session, dispatch] = useReducer(
-    (prevState, action) => {
-      switch (action.type) {
-        case "RESTORE_TOKEN":
-          return {
-            ...prevState,
-            token: action.token,
-            user: action.user,
-          };
-        case "SIGN_IN":
-          return {
-            ...prevState,
-            token: action.token,
-            user: action.user,
-          };
-        case "SIGN_OUT":
-          (async () => {
-            await AsyncStorage.removeItem("token");
-          })();
-          return {};
-        default:
-          return {};
-          throw new Error();
-      }
-    },
+
+
+  const userReducer = (prevState: State, action: Action) => {
+    switch (action.type) {
+      case "RESTORE_TOKEN":
+        return {
+          ...prevState,
+          token: action.token,
+          user: action.user,
+        };
+      case "SIGN_IN":
+        return {
+          ...prevState,
+          token: action.token,
+          user: action.user,
+        };
+      case "SIGN_OUT":
+        (async () => {
+          await AsyncStorage.removeItem("token");
+        })();
+        return {
+          token: null,
+          user: null,
+        };
+      default:
+        return {
+          token: null,
+          user: null,
+        };
+        throw new Error();
+    }
+  }
+
+  const [session, dispatch] = useReducer(userReducer,
     {
       token: null,
       user: null,
@@ -73,9 +98,11 @@ const App = () => {
         if (theme) setTheme(theme);
         console.log(
           "Expires in: (minutes) ",
+          // @ts-ignore
           moment.unix(tokenExpiration).diff(moment(), "minutes")
         );
         if (
+          // @ts-ignore
           moment().diff(moment.unix(tokenExpiration), "minutes") > 0 ||
           !tokenExpiration
         ) {
@@ -92,7 +119,9 @@ const App = () => {
       }
       dispatch({
         type: "RESTORE_TOKEN",
+        // @ts-ignore
         token: userToken,
+        // @ts-ignore
         user: user?.user,
       });
     };

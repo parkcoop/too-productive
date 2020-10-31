@@ -6,8 +6,6 @@ import {
   BottomNavigation,
   BottomNavigationTab,
   Icon,
-  Layout,
-  Text,
 } from "@ui-kitten/components";
 import Dashboard from "../screens/Dashboard";
 import Notes from "../screens/Notes";
@@ -15,13 +13,13 @@ import Reminders from "../screens/Reminders";
 import Settings from "../screens/Settings";
 import Login from "../screens/AuthScreen/Login";
 import Register from "../screens/AuthScreen/Register";
-import { SessionContext, ThemeContext } from "../context";
+import { SessionContext } from "../context";
 
 const TabNavigator = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const BottomTabBar = ({ navigation, state }) => {
-  const { theme } = useContext(ThemeContext);
+
+const BottomTabBar: React.FC<any> = ({ navigation, state }) => {
   return (
     <BottomNavigation
       style={{ height: 75 }}

@@ -10,7 +10,7 @@
       "skipLibCheck": true,
   /* Strict Type-Checking Options */
       "strict": true,                           
-      "noImplicitAny": false,               
+      "noImplicitAny": true,               
       "strictNullChecks": true,              
       "strictFunctionTypes": true,           
       "strictPropertyInitialization": true,  

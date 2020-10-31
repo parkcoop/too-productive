@@ -1,10 +1,9 @@
 import { Layout, Text, Button } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import RichTextEditor from "../../common/components/RichTextEditor";
 
 const Notes = () => {
-  const [newNote, setNewNote] = useState(false);
+  const [newNote, setNewNote] = useState<boolean>(false);
   return (
     <Layout style={{ flex: 1, padding: 15 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -15,7 +14,11 @@ const Notes = () => {
         >
           {newNote ? `Hide` : `New note`}
         </Button>
-        {newNote && <RichTextEditor />}
+        {newNote && (
+          <Layout>
+            <Text>OMG</Text>
+          </Layout>
+        )}
       </SafeAreaView>
     </Layout>
   );

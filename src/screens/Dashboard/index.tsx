@@ -1,19 +1,23 @@
 import React, { useContext } from "react";
 import {
-  ApplicationProvider,
   Button,
   Divider,
   Layout,
   Text,
-  TopNavigation,
-  IconRegistry,
 } from "@ui-kitten/components";
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 import { SafeAreaView } from "react-native-safe-area-context";
-import RichTextEditor from "../../common/components/RichTextEditor";
 import { SessionContext } from "../../context";
 
-const Dashboard = ({ navigation }) => {
-  const { session, dispatch } = useContext(SessionContext);
+interface DashboardProps {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>
+}
+const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
+  const { session } = useContext(SessionContext);
   return (
     <Layout style={{ flex: 1, padding: 15 }}>
       <SafeAreaView style={{ flex: 1 }}>

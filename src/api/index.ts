@@ -1,10 +1,28 @@
 import axios from 'axios'
 import { showMessage } from 'react-native-flash-message'
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { v4 as uuidv4 } from 'uuid';
 var PushNotification = require("react-native-push-notification");
 
-const signUp = ({ username, password, fullName }) => {
+// Is this correct convention?
+type SignUp = {
+    username: string,
+    password: string,
+    fullName: string
+}
+type Login = {
+    username: string,
+    password: string,
+}
+type User = {
+    _id: string,
+    username: string,
+    avatar: string
+}
+
+type AuthPayload = {
+    user: User,
+    token: string
+}
+const signUp: (arg0: SignUp) => Promise<AuthPayload> = ({ username, password, fullName }) => {
     console.log(username, password, fullName)
     return axios.post('http://127.0.0.1:5000/signup', {
         username,
@@ -12,10 +30,11 @@ const signUp = ({ username, password, fullName }) => {
         fullName
     } )
     .then(res => Promise.resolve(res.data))
-    .catch(err => showMessage({type:'error', color:'white', backgroundColor: 'red', message:'Error logging in', description: err.response?.data?.msg}))
+    .catch(err => showMessage({type:'danger', color:'white', backgroundColor: 'red', message:'Error logging in', description: err.response?.data?.msg}))
 }
 
-const login = ({ username, password }) => {
+
+const login: (arg0: Login) => Promise<AuthPayload> = ({ username, password }) => {
     return axios.post('http://10.0.0.177:5000/login', {
         username,
         password
@@ -30,10 +49,17 @@ const login = ({ username, password }) => {
         return Promise.resolve(res.data)})
     .catch(err => {
         console.log(err)
-        showMessage({type:'error', color:'white', backgroundColor: 'red', message:'Error logging in', description: err.response?.data?.msg})})
+        showMessage({type:'danger', color:'white', backgroundColor: 'red', message:'Error logging in', description: err.response?.data?.msg})})
 }
 
-const saveReminder = ({ description, reminderDate, notificationId, userId}) => {
+type SaveReminder = {
+    description: string,
+    reminderDate: Date,
+    notificationId: number,
+    userId: string
+}
+
+const saveReminder: (arg0: SaveReminder) => Promise<{}> = ({ description, reminderDate, notificationId, userId}) => {
     return axios.post('http://10.0.0.177:5000/reminder', {
         description,
         reminderDate,
@@ -41,10 +67,10 @@ const saveReminder = ({ description, reminderDate, notificationId, userId}) => {
         userId
     })
     .then(res => Promise.resolve(res.data))
-    .catch(err => showMessage({type:'error', color:'white', backgroundColor: 'red', message:'Error saving notification', description: err.response?.data?.msg}))
+    .catch(err => showMessage({type:'danger', color:'white', backgroundColor: 'red', message:'Error saving notification', description: err.response?.data?.msg}))
 }
 
-const getReminders = (userId) => {
+const getReminders: (arg0: string) => Promise<{data: []}> = (userId: string) => {
     return axios.get('http://10.0.0.177:5000/reminders', {
         params: {
             userId
@@ -53,7 +79,7 @@ const getReminders = (userId) => {
     .then(res => Promise.resolve(res.data))
     .catch(err => {
         console.log(err.response)
-        showMessage({type:'error', color:'white', backgroundColor: 'red', message:'Error logging in', description: err.response?.data?.msg})})
+        showMessage({type:'danger', color:'white', backgroundColor: 'red', message:'Error logging in', description: err.response?.data?.msg})})
 }
 
 export {

@@ -6,24 +6,24 @@ import {
   Text,
   useTheme,
 } from "@ui-kitten/components";
-import React, { useContext, useEffect, useState } from "react";
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { useContext, useState } from "react";
+import { KeyboardAvoidingView, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import moment from "moment";
 import DatePicker from "../../../../common/components/DatePicker";
 import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
 import PushNotification from "react-native-push-notification";
 import { saveReminder } from "../../../../api";
 import { SessionContext } from "../../../../context";
 
-const NewReminder = ({ setNewReminderOpen, newReminderOpen }) => {
-  const [datePickerOpen, setDatePickerOpen] = useState(false);
-  const [description, setDescription] = useState();
+interface NewReminderProps {
+  setNewReminderOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  newReminderOpen: boolean
+}
+
+const NewReminder: React.FC<NewReminderProps> = ({ setNewReminderOpen, newReminderOpen }) => {
+  const [description, setDescription] = useState<string>('');
   const { session } = useContext(SessionContext);
-  const [reminderDate, setReminderDate] = useState(
+  const [reminderDate, setReminderDate] = useState<Date>(
     new Date(Date.now() + 5 * 1000)
   );
 
@@ -32,7 +32,7 @@ const NewReminder = ({ setNewReminderOpen, newReminderOpen }) => {
   const postReminder = async () => {
     console.log(description, reminderDate);
     if (!reminderDate || !description) return;
-    let notificationId = uuidv4();
+    let notificationId = Math.ceil(Math.random()*Date.now());
 
     PushNotification.localNotificationSchedule({
       title: "New reminder",
@@ -53,17 +53,13 @@ const NewReminder = ({ setNewReminderOpen, newReminderOpen }) => {
   return (
     <Modal
       transparent={false}
-      animationType="slide"
-      visible={newReminderOpen}
+      isVisible={newReminderOpen}
       presentationStyle="formSheet"
       style={{
         ...styles.modal,
         backgroundColor: theme["background-basic-color-1"],
       }}
       onBackdropPress={() => setNewReminderOpen(false)}
-      onRequestClose={() => {
-        setNewReminderOpen(false);
-      }}
     >
       <Layout style={{ display: "flex", flexDirection: "column" }}>
         <Icon
@@ -96,7 +92,6 @@ const NewReminder = ({ setNewReminderOpen, newReminderOpen }) => {
             />
           </Layout>
           <Button
-            icon="clock-outline"
             onPress={postReminder}
             style={{ width: "50%", alignSelf: "center", margin: 15 }}
           >
