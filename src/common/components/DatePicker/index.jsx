@@ -7,8 +7,12 @@ import {
   useTheme,
 } from "@ui-kitten/components";
 import React, { useState } from "react";
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import Modal from "react-native-modal";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";

@@ -6,7 +6,7 @@ import {
   Text,
   useTheme,
 } from "@ui-kitten/components";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
@@ -17,11 +17,15 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import PushNotification from "react-native-push-notification";
 import { saveReminder } from "../../../../api";
+import { SessionContext } from "../../../../context";
 
 const NewReminder = ({ setNewReminderOpen, newReminderOpen }) => {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [description, setDescription] = useState();
-  const [reminderDate, setReminderDate] = useState();
+  const { session } = useContext(SessionContext);
+  const [reminderDate, setReminderDate] = useState(
+    new Date(Date.now() + 5 * 1000)
+  );
 
   const theme = useTheme();
 
@@ -31,13 +35,18 @@ const NewReminder = ({ setNewReminderOpen, newReminderOpen }) => {
     let notificationId = uuidv4();
 
     PushNotification.localNotificationSchedule({
-      title: "HEY YOU! YOU TOLD ME TO REMIND YOU",
+      title: "New reminder",
       id: notificationId,
       message: description,
       date: reminderDate,
       allowWhileIdle: true,
     });
-    await saveReminder({ description, reminderDate, notificationId });
+    await saveReminder({
+      description,
+      reminderDate,
+      notificationId,
+      userId: session.user._id,
+    });
     setNewReminderOpen(false);
   };
 
