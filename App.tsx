@@ -19,9 +19,9 @@ import jwt_decode from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface User {
-  _id: string,
-  username: string,
-  avatar: string
+  readonly _id: string,
+  readonly username: string,
+  readonly avatar: string
 }
 
 type Action = { 
@@ -42,7 +42,6 @@ const App: React.FC = () => {
     setTheme(nextTheme);
     await AsyncStorage.setItem("theme", nextTheme);
   };
-
 
 
   const userReducer = (prevState: State, action: Action) => {

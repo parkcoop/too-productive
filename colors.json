@@ -1,4 +1,4 @@
-let lol = { "background-alternative-color-1": "#222B45",
+[{ "background-alternative-color-1": "#222B45",
  "background-alternative-color-2": "#1A2138",
  "background-alternative-color-3": "#151A30",
  "background-alternative-color-4": "#101426",
@@ -309,4 +309,4 @@ let lol = { "background-alternative-color-1": "#222B45",
  "text-warning-color": "#FFAA00"
 , "text-warning-disabled-color": "#FFC94D",
  "text-warning-focus-color": "#DB8B00"
-, "text-warning-hover-color": "#FFC94D" }
+, "text-warning-hover-color": "#FFC94D" }]
