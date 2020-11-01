@@ -2,11 +2,10 @@ import { Input, Layout, Text, Button } from "@ui-kitten/components";
 import React, { useContext, useState } from "react";
 import { KeyboardAvoidingView } from "react-native";
 import { SessionContext } from "../../../../context";
-import { saveNote } from "../../../../api/Notes";
 
 interface Props {}
 
-const NoteToSelf: React.FC<Props> = () => {
+const NoteToSelf: React.FC<Props> = ({ saveUserNote }) => {
     const [note, setNote] = useState<string>("");
     const { session } = useContext(SessionContext);
     return (
@@ -22,17 +21,7 @@ const NoteToSelf: React.FC<Props> = () => {
                     autoFocus
                     textStyle={{ minHeight: 64 }}
                 />
-                <Button
-                    onPress={() => {
-                        saveNote({
-                            userId: session.user._id,
-                            body: note,
-                            type: "NOTE_TO_SELF",
-                        });
-                    }}
-                >
-                    SAVE
-                </Button>
+                <Button onPress={() => saveUserNote(note)}>SAVE</Button>
             </Layout>
         </KeyboardAvoidingView>
     );

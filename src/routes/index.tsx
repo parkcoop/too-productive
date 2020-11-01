@@ -3,94 +3,123 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
-  BottomNavigation,
-  BottomNavigationTab,
-  Icon,
+    BottomNavigation,
+    BottomNavigationTab,
+    Icon,
+    useTheme,
 } from "@ui-kitten/components";
 import Dashboard from "../screens/Dashboard";
+import Habits from "../screens/Habits";
 import Notes from "../screens/Notes";
 import Reminders from "../screens/Reminders";
-import Settings from "../screens/Settings";
 import Login from "../screens/AuthScreen/Login";
 import Register from "../screens/AuthScreen/Register";
+import NewAction from "../common/components/NewAction";
 import { SessionContext } from "../context";
 
 const TabNavigator = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+const BlankPage = () => null;
 
 const BottomTabBar: React.FC<any> = ({ navigation, state }) => {
-  return (
-    <BottomNavigation
-      style={{ height: 75 }}
-      // indicatorStyle={{ color: "red", backgroundColor: "red", height: 100 }}
-      selectedIndex={state.index}
-      onSelect={(index) => navigation.navigate(state.routeNames[index])}
-    >
-      <BottomNavigationTab
-        // style={{ backgroundColor: "red", color: "white" }}
-        icon={(props) => (
-          <Icon
-            {...props}
-            fill={state.index === 0 ? "#F3f3f3" : "#8F9BB3"}
-            name="grid-outline"
-          />
-        )}
-      />
-      <BottomNavigationTab
-        icon={(props) => (
-          <Icon
-            {...props}
-            fill={state.index === 1 ? "#F3f3f3" : "#8F9BB3"}
-            name="file-text-outline"
-          />
-        )}
-      />
-      <BottomNavigationTab
-        icon={(props) => (
-          <Icon
-            {...props}
-            fill={state.index === 2 ? "#F3f3f3" : "#8F9BB3"}
-            name="bulb-outline"
-          />
-        )}
-      />
-      <BottomNavigationTab
-        icon={(props) => (
-          <Icon
-            {...props}
-            fill={state.index === 3 ? "#F3f3f3" : "#8F9BB3"}
-            name="settings-outline"
-          />
-        )}
-      />
-    </BottomNavigation>
-  );
+    const theme = useTheme();
+    return (
+        <BottomNavigation
+            style={{ height: 75 }}
+            indicatorStyle={{
+                backgroundColor: theme["color-primary-active-border"],
+                borderRadius: 5,
+                // height: 100,
+            }}
+            selectedIndex={state.index}
+            onSelect={(index) => navigation.navigate(state.routeNames[index])}
+        >
+            <BottomNavigationTab
+                // style={{ backgroundColor: "red", color: "white" }}
+                icon={(props) => (
+                    <Icon
+                        {...props}
+                        fill={
+                            state.index === 0
+                                ? theme["text-primary-focus-color"]
+                                : theme["text-basic-color"]
+                        }
+                        name="grid-outline"
+                    />
+                )}
+            />
+            <BottomNavigationTab
+                icon={(props) => (
+                    <Icon
+                        {...props}
+                        fill={
+                            state.index === 1
+                                ? theme["text-primary-focus-color"]
+                                : theme["text-basic-color"]
+                        }
+                        name="repeat-outline"
+                    />
+                )}
+            />
+            <BottomNavigationTab
+                icon={() => <NewAction navigation={navigation} />}
+            />
+            <BottomNavigationTab
+                // style={{ backgroundColor: "white", boird }}
+                icon={(props) => (
+                    <Icon
+                        {...props}
+                        fill={
+                            state.index === 3
+                                ? theme["text-primary-focus-color"]
+                                : theme["text-basic-color"]
+                        }
+                        name="bulb-outline"
+                    />
+                )}
+            />
+            <BottomNavigationTab
+                icon={(props) => (
+                    <Icon
+                        {...props}
+                        fill={
+                            state.index === 4
+                                ? theme["text-primary-focus-color"]
+                                : theme["text-basic-color"]
+                        }
+                        name="file-text-outline"
+                    />
+                )}
+            />
+        </BottomNavigation>
+    );
 };
 
 const InternalPages = () => (
-  <TabNavigator.Navigator tabBar={(props) => <BottomTabBar {...props} />}>
-    <TabNavigator.Screen name="Dashboard" component={Dashboard} />
-    <TabNavigator.Screen name="Notes" component={Notes} />
-    <TabNavigator.Screen name="Reminders" component={Reminders} />
-    <TabNavigator.Screen name="Settings" component={Settings} />
-  </TabNavigator.Navigator>
+    <TabNavigator.Navigator tabBar={(props) => <BottomTabBar {...props} />}>
+        <TabNavigator.Screen name="Dashboard" component={Dashboard} />
+        <TabNavigator.Screen name="Habits" component={Habits} />
+        <TabNavigator.Screen name="Blank" component={BlankPage} />
+        <TabNavigator.Screen name="Reminders" component={Reminders} />
+        <TabNavigator.Screen name="Notes" component={Notes} />
+    </TabNavigator.Navigator>
 );
 
 const ExternalPages = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Login" component={Login} />
-    <Stack.Screen name="Register" component={Register} />
-  </Stack.Navigator>
+    <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
+    </Stack.Navigator>
 );
 
 const AppNavigator = () => {
-  const { session } = useContext(SessionContext);
-  return (
-    <NavigationContainer>
-      {session?.token ? <InternalPages /> : <ExternalPages />}
-    </NavigationContainer>
-  );
+    const { session } = useContext(SessionContext);
+    return (
+        <NavigationContainer>
+            {session?.token ? <InternalPages /> : <ExternalPages />}
+        </NavigationContainer>
+    );
 };
 
 export default AppNavigator;

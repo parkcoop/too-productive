@@ -10,17 +10,16 @@ import {
 import ModalMenu from "../../common/components/ModalMenu";
 import NoteToSelf from "./components/NoteToSelf";
 import { SessionContext } from "../../context";
-import { getNotes } from "../../api/Notes";
+import { getNotes, saveNote } from "../../api/Notes";
 
 type IndexPath = {
     row: number;
     section?: number;
 };
 
-const Notes = () => {
+const Notes = ({ route, navigation }) => {
     const [existingNotes, setExistingNotes] = useState<[]>([]);
     const [newNoteVisible, setNewNoteVisible] = useState<boolean>(false);
-    const [newNoteType, setNewNoteType] = useState<string | null>();
     const [newNoteMenuVisible, setNewNoteMenuVisible] = React.useState<boolean>(
         false,
     );
@@ -29,7 +28,6 @@ const Notes = () => {
     const onItemSelect = (index: IndexPath) => {
         console.log(index);
         setNewNoteVisible(true);
-        setNewNoteType("NOTE_TO_SELF");
         setNewNoteMenuVisible(false);
     };
 
@@ -42,6 +40,17 @@ const Notes = () => {
         </Button>
     );
 
+    const saveUserNote = async (note: string) => {
+        console.log("saving");
+        let lol = await saveNote({
+            userId: session.user._id,
+            body: note,
+            type: "NOTE_TO_SELF",
+        });
+        console.log(lol);
+        setNewNoteVisible(false);
+    };
+
     const getUserNotes = async () => {
         let notes = await getNotes(session.user._id);
         console.log(notes.data);
@@ -50,6 +59,12 @@ const Notes = () => {
     useEffect(() => {
         getUserNotes();
     }, []);
+
+    useEffect(() => {
+        if (route.params.new) {
+            setNewNoteVisible(true);
+        }
+    }, [route.params]);
 
     return (
         <Layout style={{ flex: 1, padding: 15 }}>
@@ -88,15 +103,16 @@ const Notes = () => {
                     visible={newNoteVisible}
                     setVisible={setNewNoteVisible}
                 >
-                    {(() => {
+                    <NoteToSelf saveUserNote={saveUserNote} />
+                    {/* {(() => {
                         switch (newNoteType) {
                             case "WORKOUT_LOG":
                                 return <Layout />;
                             default:
                             case "NOTE_TO_SELF":
-                                return <NoteToSelf />;
+                            // return <NoteToSelf />;
                         }
-                    })()}
+                    })()} */}
                 </ModalMenu>
             </SafeAreaView>
         </Layout>
