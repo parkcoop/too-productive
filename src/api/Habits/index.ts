@@ -1,17 +1,17 @@
 import axios from "axios";
 import { showMessage } from "react-native-flash-message";
 
-type NoteBody = {
+type HabitBody = {
     userId: string;
-    type: string;
-    body: string;
+    label: string;
+    color: string;
 };
 
-const getNotes: (arg0: string) => Promise<{ data: [] }> = (
+const getHabits: (arg0: string) => Promise<{ data: [] }> = (
     userId: string,
 ) => {
     return axios
-        .get("http://192.168.86.218:5000/notes", {
+        .get("http://192.168.86.218:5000/habits", {
             params: {
                 userId,
             },
@@ -23,18 +23,18 @@ const getNotes: (arg0: string) => Promise<{ data: [] }> = (
                 type: "danger",
                 color: "white",
                 backgroundColor: "red",
-                message: "Error logging in",
+                message: "Error getting habits",
                 description: err.response?.data?.msg,
             });
         });
 };
 
-const saveNote: (arg0: NoteBody) => Promise<{}> = ({ userId, type, body }) => {
+const saveHabit: (arg0: HabitBody) => Promise<{}> = ({ userId, label, color }) => {
     return axios
-        .post("http://192.168.86.218:5000/notes", {
+        .post("http://192.168.86.218:5000/habits", {
             userId,
-            type,
-            body,
+            label,
+            color,
         })
         .then((res) => Promise.resolve(res.data))
         .catch((err) =>
@@ -42,10 +42,10 @@ const saveNote: (arg0: NoteBody) => Promise<{}> = ({ userId, type, body }) => {
                 type: "danger",
                 color: "white",
                 backgroundColor: "red",
-                message: "Error logging in",
+                message: "Error saving habit",
                 description: err.response?.data?.msg,
             }),
         );
 };
 
-export { getNotes, saveNote };
+export { getHabits, saveHabit };

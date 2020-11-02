@@ -1,4 +1,4 @@
-import { Button, Layout, Text } from "@ui-kitten/components";
+import { Layout, Text } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { SessionContext } from "../../context";
@@ -11,7 +11,7 @@ interface Reminder {
     description: string;
     userId?: string;
 }
-
+//@ts-ignore
 const Reminders: React.FC = ({ route }) => {
     const [reminders, setReminders] = useState<Array<Reminder>>([]);
     const [newReminderOpen, setNewReminderOpen] = useState<boolean>(false);
@@ -40,12 +40,6 @@ const Reminders: React.FC = ({ route }) => {
                     setNewReminderOpen={setNewReminderOpen}
                 />
                 <Text style={{ fontSize: 23 }}>Reminders</Text>
-                <Button
-                    onPress={() => setNewReminderOpen(true)}
-                    style={{ width: "50%", alignSelf: "center", margin: 15 }}
-                >
-                    New reminder
-                </Button>
                 <Text>Upcoming Reminders</Text>
                 <ScrollView>
                     {reminders?.map((reminder: Reminder) => {

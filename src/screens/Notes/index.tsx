@@ -61,7 +61,7 @@ const Notes = ({ route, navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (route.params.new) {
+        if (route.params?.new) {
             setNewNoteVisible(true);
         }
     }, [route.params]);

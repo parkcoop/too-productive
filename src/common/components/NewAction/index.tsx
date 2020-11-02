@@ -3,14 +3,17 @@ import { StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { Button, Icon, Layout, Text, useTheme } from "@ui-kitten/components";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ModalMenu from "../ModalMenu";
-import NoteToSelf from "../../../screens/Notes/components/NoteToSelf";
-import { useNavigation } from "@react-navigation/native";
+import {
+    NavigationParams,
+    NavigationScreenProp,
+    NavigationState,
+} from "react-navigation";
+interface NewActionProps {
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
 
-const NewAction = ({ navigation }) => {
+const NewAction: React.FC<NewActionProps> = ({ navigation }) => {
     const [panelVisible, setPanelVisible] = useState(false);
-    const [dialogVisible, setDialogVisible] = useState<boolean>(false);
-    const [newItem, setNewItem] = useState<string>("");
     const theme = useTheme();
     return (
         <>
@@ -20,10 +23,11 @@ const NewAction = ({ navigation }) => {
                 }}
                 style={styles.buttonStyle}
             >
-                <Text>NEW</Text>
+                +
             </Button>
             <Layout>
                 <Modal
+                    transparent
                     backdropOpacity={0.3}
                     isVisible={panelVisible}
                     onBackdropPress={() => setPanelVisible(false)}
@@ -124,6 +128,7 @@ const styles = StyleSheet.create({
         fontSize: 23,
         height: 90,
         width: 90,
+        // padding: 5,
         borderRadius: 50,
     },
 });

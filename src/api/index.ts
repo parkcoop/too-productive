@@ -24,7 +24,7 @@ type AuthPayload = {
 }
 const signUp: (arg0: SignUp) => Promise<AuthPayload> = ({ username, password, fullName }) => {
     console.log(username, password, fullName)
-    return axios.post('http://127.0.0.1:5000/signup', {
+    return axios.post('http://192.168.86.218:5000/signup', {
         username,
         password,
         fullName
@@ -35,7 +35,7 @@ const signUp: (arg0: SignUp) => Promise<AuthPayload> = ({ username, password, fu
 
 
 const login: (arg0: Login) => Promise<AuthPayload> = ({ username, password }) => {
-    return axios.post('http://10.0.0.177:5000/login', {
+    return axios.post('http://192.168.86.218:5000/login', {
         username,
         password
     } )
@@ -60,7 +60,7 @@ type SaveReminder = {
 }
 
 const saveReminder: (arg0: SaveReminder) => Promise<{}> = ({ description, reminderDate, notificationId, userId}) => {
-    return axios.post('http://10.0.0.177:5000/reminder', {
+    return axios.post('http://192.168.86.218:5000/reminder', {
         description,
         reminderDate,
         notificationId,
@@ -71,7 +71,7 @@ const saveReminder: (arg0: SaveReminder) => Promise<{}> = ({ description, remind
 }
 
 const getReminders: (arg0: string) => Promise<{data: []}> = (userId: string) => {
-    return axios.get('http://10.0.0.177:5000/reminders', {
+    return axios.get('http://192.168.86.218:5000/reminders', {
         params: {
             userId
         }

@@ -1,13 +1,13 @@
 import { Input, Layout, Text, Button } from "@ui-kitten/components";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { KeyboardAvoidingView } from "react-native";
-import { SessionContext } from "../../../../context";
 
-interface Props {}
+interface Props {
+    saveUserNote: (arg0: string) => void;
+}
 
 const NoteToSelf: React.FC<Props> = ({ saveUserNote }) => {
     const [note, setNote] = useState<string>("");
-    const { session } = useContext(SessionContext);
     return (
         <KeyboardAvoidingView>
             <Layout style={{ marginBottom: 15 }}>
