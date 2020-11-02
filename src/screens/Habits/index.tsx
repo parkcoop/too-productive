@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Layout, Text } from "@ui-kitten/components";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { Layout, Text, useTheme } from "@ui-kitten/components";
+import {
+    Dimensions,
+    ScrollView,
+    StyleSheet,
+    TouchableOpacity,
+} from "react-native";
 import CalendarGrid from "./components/CalendarGrid";
 import habits from "./components/CalendarGrid/data";
 import NewHabit from "./components/NewHabit";
 import ModalMenu from "../../common/components/ModalMenu";
-import { SessionContext } from "../../context";
+import { SessionContext, ThemeContext } from "../../context";
 import { getHabits, saveHabit } from "../../api/Habits";
 import { CommonActions } from "@react-navigation/native";
+import HabitTracker from "./components/HabitTracker";
 
 interface Habit {
     label: string;
@@ -20,10 +26,14 @@ interface Habit {
 const Habits = ({ route, navigation }) => {
     const [userHabits, setUserHabits] = useState<Habit[]>([]);
     const [newHabitVisible, setNewHabitVisible] = useState<boolean>(false);
+    const [habit, setHabit] = useState<Habit>();
+    const [openHabit, setOpenHabit] = useState<boolean>(false);
     const [newHabitMenuVisible, setNewHabitMenuVisible] = React.useState<
         boolean
     >(false);
     const { session } = useContext(SessionContext);
+    const theme = useTheme();
+    const { theme: brightnessTheme } = useContext(ThemeContext)
 
     const getUserReminders = async () => {
         let userHabits = await getHabits(session.user._id);
@@ -46,9 +56,9 @@ const Habits = ({ route, navigation }) => {
     return (
         <Layout style={{ flex: 1, padding: 15 }}>
             <SafeAreaView style={{ flex: 1 }}>
-                <ScrollView>
+                <ScrollView style={{ flexGrow: 1 }}>
                     <Text style={{ fontSize: 23 }}>Habit Tracking</Text>
-                    <Layout style={{ width: "100%", height: 87.5 }}>
+                    <Layout style={{ width: "100%" }}>
                         {habits &&
                             habits.map((habit, i) => {
                                 return (
@@ -56,7 +66,8 @@ const Habits = ({ route, navigation }) => {
                                         key={i}
                                         style={{
                                             backgroundColor:
-                                                "rgba(255,255,255,0.1)",
+                                            (brightnessTheme === 'dark' ? 
+                                                theme["color-basic-700"] : theme["color-basic-200"]),
                                             padding: 5,
                                             margin: 10,
                                             height: 175,
@@ -64,7 +75,10 @@ const Habits = ({ route, navigation }) => {
                                         }}
                                     >
                                         <Text
-                                            style={{ fontSize: 18, margin: 10 }}
+                                            style={{
+                                                fontSize: 18,
+                                                margin: 10,
+                                            }}
                                         >
                                             {habit.label}
                                         </Text>
@@ -75,7 +89,14 @@ const Habits = ({ route, navigation }) => {
                                                 paddingRight: 25,
                                             }}
                                         >
-                                            <CalendarGrid habit={habit} />
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    setHabit(habit);
+                                                    setOpenHabit(true);
+                                                }}
+                                            >
+                                                <CalendarGrid habit={habit} />
+                                            </TouchableOpacity>
                                         </ScrollView>
                                     </Layout>
                                 );
@@ -87,6 +108,9 @@ const Habits = ({ route, navigation }) => {
                     setVisible={setNewHabitMenuVisible}
                 >
                     <NewHabit saveUserHabit={saveUserHabit} />
+                </ModalMenu>
+                <ModalMenu visible={openHabit} setVisible={setOpenHabit}>
+                    <HabitTracker habit={habit} saveUserHabit={saveUserHabit} />
                 </ModalMenu>
             </SafeAreaView>
         </Layout>
