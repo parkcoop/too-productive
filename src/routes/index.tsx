@@ -26,9 +26,9 @@ const BottomTabBar: React.FC<any> = ({ navigation, state }) => {
     const theme = useTheme();
     return (
         <BottomNavigation
-            style={{ height: 75 }}
+            style={{ height: 75, backgroundColor: theme["color-primary-500"]}}
             indicatorStyle={{
-                backgroundColor: theme["color-primary-active-border"],
+                backgroundColor: theme["color-secondary-600"],
                 borderRadius: 5,
                 // height: 100,
             }}
@@ -42,8 +42,8 @@ const BottomTabBar: React.FC<any> = ({ navigation, state }) => {
                         {...props}
                         fill={
                             state.index === 0
-                                ? theme["text-primary-focus-color"]
-                                : theme["text-basic-color"]
+                                ? theme["color-secondary-600"]
+                                : theme["color-primary-100"]
                         }
                         name="grid-outline"
                     />
@@ -55,8 +55,8 @@ const BottomTabBar: React.FC<any> = ({ navigation, state }) => {
                         {...props}
                         fill={
                             state.index === 1
-                                ? theme["text-primary-focus-color"]
-                                : theme["text-basic-color"]
+                                ? theme["color-secondary-600"]
+                                : theme["color-primary-100"]
                         }
                         name="repeat-outline"
                     />
@@ -72,8 +72,8 @@ const BottomTabBar: React.FC<any> = ({ navigation, state }) => {
                         {...props}
                         fill={
                             state.index === 3
-                                ? theme["text-primary-focus-color"]
-                                : theme["text-basic-color"]
+                                ? theme["color-secondary-600"]
+                                : theme["color-primary-100"]
                         }
                         name="bulb-outline"
                     />
@@ -85,8 +85,8 @@ const BottomTabBar: React.FC<any> = ({ navigation, state }) => {
                         {...props}
                         fill={
                             state.index === 4
-                                ? theme["text-primary-focus-color"]
-                                : theme["text-basic-color"]
+                                ? theme["color-secondary-600"]
+                                : theme["color-primary-100"]
                         }
                         name="file-text-outline"
                     />

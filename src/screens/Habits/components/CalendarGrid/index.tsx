@@ -54,6 +54,7 @@ const CalendarGrid: React.FC<Props> = ({ habit }) => {
             style={{
                 backgroundColor: "rgba(0,0,0,0)",
                 width: "100%",
+                minWidth: "100%",
                 height: 130,
                 display: "flex",
                 flexWrap: "wrap",

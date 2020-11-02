@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import React, { useState, useContext } from "react";
+import { StyleSheet, TouchableOpacity, Vibration } from "react-native";
 import Modal from "react-native-modal";
+import { ThemeContext } from "../../../context";
 import { Button, Icon, Layout, Text, useTheme } from "@ui-kitten/components";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import {
     NavigationParams,
     NavigationScreenProp,
@@ -11,20 +11,46 @@ import {
 interface NewActionProps {
     navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-
 const NewAction: React.FC<NewActionProps> = ({ navigation }) => {
     const [panelVisible, setPanelVisible] = useState(false);
     const theme = useTheme();
+    const { theme: brightnessTheme } = useContext(ThemeContext);
     return (
         <>
-            <Button
+            <TouchableOpacity
                 onPress={() => {
+                    Vibration.vibrate(100);
                     setPanelVisible(true);
                 }}
-                style={styles.buttonStyle}
             >
-                +
-            </Button>
+                <Layout
+                    style={{
+                        ...styles.buttonStyle,
+                        borderWidth: 5,
+                        borderColor: "white",
+                        backgroundColor: theme["color-primary-100"],
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 3,
+                        },
+                        shadowOpacity: 0.53,
+                        shadowRadius: 4.97,
+
+                        elevation: 5,
+                    }}
+                >
+                    <Icon
+                        style={{
+                            width: 50,
+                            height: 50,
+                            margin: 10,
+                        }}
+                        fill={theme["color-primary-500"]}
+                        name="plus-outline"
+                    />
+                </Layout>
+            </TouchableOpacity>
             <Layout>
                 <Modal
                     transparent
@@ -40,15 +66,24 @@ const NewAction: React.FC<NewActionProps> = ({ navigation }) => {
                             }}
                         >
                             <Layout style={{ alignItems: "center" }}>
-                                <Icon
+                                <Layout
                                     style={{
-                                        width: 50,
-                                        height: 50,
-                                        margin: 10,
+                                        backgroundColor: "red",
+                                        borderRadius: 50,
+                                        padding: 5,
+                                        marginBottom: 10,
                                     }}
-                                    fill={theme["text-basic-color"]}
-                                    name="repeat-outline"
-                                />
+                                >
+                                    <Icon
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                            margin: 10,
+                                        }}
+                                        fill={theme["color-primary-400"]}
+                                        name="repeat-outline"
+                                    />
+                                </Layout>
                                 <Text>Habit</Text>
                             </Layout>
                         </TouchableOpacity>
@@ -64,7 +99,7 @@ const NewAction: React.FC<NewActionProps> = ({ navigation }) => {
                                         height: 50,
                                         margin: 10,
                                     }}
-                                    fill={theme["text-basic-color"]}
+                                    fill={theme["color-primary-400"]}
                                     name="bulb-outline"
                                 />
                                 <Text>Reminder</Text>
@@ -82,7 +117,7 @@ const NewAction: React.FC<NewActionProps> = ({ navigation }) => {
                                         height: 50,
                                         margin: 10,
                                     }}
-                                    fill={theme["text-basic-color"]}
+                                    fill={theme["color-primary-400"]}
                                     name="file-text-outline"
                                 />
                                 <Text>Note</Text>
@@ -113,8 +148,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        borderTopRightRadius: 17,
-        borderTopLeftRadius: 17,
+        borderTopRightRadius: 35,
+        borderTopLeftRadius: 35,
     },
     contentTitle: {
         fontSize: 20,
@@ -128,7 +163,12 @@ const styles = StyleSheet.create({
         fontSize: 23,
         height: 90,
         width: 90,
+        // backgroundColor: '#CDCDCD',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         // padding: 5,
         borderRadius: 50,
+        marginBottom: 50,
     },
 });
