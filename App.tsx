@@ -120,7 +120,7 @@ const App: React.FC = () => {
                 // @ts-ignore
                 token: userToken,
                 // @ts-ignore
-                user: user?.user,
+                user: user?.foundUser,
             });
         };
 

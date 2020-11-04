@@ -52,56 +52,79 @@ const CalendarGrid: React.FC<Props> = ({ habit }) => {
     return (
         <Layout
             style={{
-                backgroundColor: "rgba(0,0,0,0)",
-                width: "100%",
-                minWidth: "100%",
-                height: 130,
                 display: "flex",
-                flexWrap: "wrap",
+                flexDirection: "row",
+                backgroundColor: "transparent",
             }}
         >
-            <Text style={styles.cell}></Text>
-            <Text style={styles.cell}>M</Text>
-            <Text style={styles.cell}></Text>
-            <Text style={styles.cell}>W</Text>
-            <Text style={styles.cell}></Text>
-            <Text style={styles.cell}>F</Text>
-            <Text style={styles.cell}></Text>
-            {squaresData.map((day, i) => (
-                <Svg
-                    key={i}
-                    style={{ margin: 2.5 }}
-                    height="12.5px"
-                    width="12.5px"
-                    viewBox="0 0 12.5 12.5"
+            <Layout
+                style={{
+                    backgroundColor: "transparent",
+
+                    width: 25,
+                    minWidth: 25,
+                    height: 150,
+                    display: "flex",
+                    flexWrap: "wrap",
+                }}
+            >
+                <Text style={styles.cell}></Text>
+                <Text style={styles.cell}>M</Text>
+                <Text style={styles.cell}></Text>
+                <Text style={styles.cell}>W</Text>
+                <Text style={styles.cell}></Text>
+                <Text style={styles.cell}>F</Text>
+                <Text style={styles.cell}></Text>
+            </Layout>
+            <ScrollView horizontal>
+                <Layout
+                    style={{
+                        backgroundColor: "transparent",
+
+                        width: "100%",
+                        minWidth: "100%",
+                        height: 150,
+                        display: "flex",
+                        flexWrap: "wrap",
+                    }}
                 >
-                    <Rect
-                        x="0"
-                        y="0"
-                        width="12.5"
-                        height="12.5"
-                        fill={((success) => {
-                            switch (success) {
-                                case true:
-                                    if (day.streak) {
-                                        return theme[
-                                            `color-${habit.color}-focus`
-                                        ];
-                                    } else {
-                                        return theme[
-                                            `color-${habit.color}-default`
-                                        ];
+                    {squaresData.map((day, i) => (
+                        <Svg
+                            key={i}
+                            style={{ margin: 2.5 }}
+                            height="15px"
+                            width="15px"
+                            viewBox="0 0 15 15"
+                        >
+                            <Rect
+                                x="0"
+                                y="0"
+                                width="15"
+                                height="15"
+                                fill={((success) => {
+                                    switch (success) {
+                                        case true:
+                                            if (day.streak) {
+                                                return theme[
+                                                    `color-${habit.color}-focus`
+                                                ];
+                                            } else {
+                                                return theme[
+                                                    `color-${habit.color}-default`
+                                                ];
+                                            }
+                                        // case false:
+                                        //     return theme["color-danger-default"];
+                                        default:
+                                        case null:
+                                            return theme["color-info-disabled"];
                                     }
-                                // case false:
-                                //     return theme["color-danger-default"];
-                                default:
-                                case null:
-                                    return theme["color-info-disabled"];
-                            }
-                        })(day.status)}
-                    />
-                </Svg>
-            ))}
+                                })(day.status)}
+                            />
+                        </Svg>
+                    ))}
+                </Layout>
+            </ScrollView>
         </Layout>
     );
 };
@@ -110,11 +133,11 @@ export default CalendarGrid;
 const styles = StyleSheet.create({
     cell: {
         width: 15,
-        height: 12.5,
+        height: 15,
         margin: 2.5,
         // paddingTop: 1,
         borderWidth: 0,
-        fontSize: 7,
+        fontSize: 15,
         textAlign: "center",
     },
 });

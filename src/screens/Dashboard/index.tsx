@@ -31,14 +31,14 @@ const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
                     <Layout>
                         <Text style={{ fontSize: 25 }}>Welcome</Text>
                         <Text style={{ fontSize: 35 }}>
-                            {session?.user.username}
+                            {session?.user?.username}
                         </Text>
                     </Layout>
                     <TouchableOpacity onPress={() => setSettingsVisible(true)}>
                         <Avatar
                             style={{ height: 40, width: 40 }}
                             source={{
-                                uri: session.user.avatar,
+                                uri: session?.user?.avatar,
                             }}
                         ></Avatar>
                     </TouchableOpacity>

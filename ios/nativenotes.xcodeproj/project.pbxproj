@@ -60,7 +60,7 @@
 		2D02E4901E0B4A5D006451C7 /* nativenotes-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nativenotes-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C4D43BF6A182A19F980B02F /* libPods-nativenotes-nativenotesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-nativenotes-nativenotesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FFCDC68254B91C7001E7B97 /* nativenotes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = nativenotes.entitlements; path = nativenotes/nativenotes.entitlements; sourceTree = "<group>"; };
-		63F10BCA158D4ADE950C20FF /* ShareTechMono-Regular.ttf */ = {isa = PBXFileReference; name = "ShareTechMono-Regular.ttf"; path = "../assets/ShareTechMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		63F10BCA158D4ADE950C20FF /* ShareTechMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ShareTechMono-Regular.ttf"; path = "../assets/ShareTechMono-Regular.ttf"; sourceTree = "<group>"; };
 		6C3FBA592A5433818485949F /* Pods-nativenotes-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nativenotes-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-nativenotes-tvOSTests/Pods-nativenotes-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		72ACB12B704ACDE7E5AF7553 /* Pods-nativenotes-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nativenotes-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-nativenotes-tvOSTests/Pods-nativenotes-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		75337505E8D50CD0B2DFEA45 /* libPods-nativenotes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-nativenotes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,13 +154,12 @@
 			sourceTree = "<group>";
 		};
 		4038860D5BCA44038298BFE6 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				63F10BCA158D4ADE950C20FF /* ShareTechMono-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
@@ -305,9 +304,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = L9SZVFV7MR;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = L9SZVFV7MR;
 						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 					};
@@ -638,6 +639,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = L9SZVFV7MR;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -663,6 +665,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = L9SZVFV7MR;
 				INFOPLIST_FILE = nativenotesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -687,7 +690,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = L9SZVFV7MR;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = nativenotes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -715,7 +718,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = L9SZVFV7MR;
 				INFOPLIST_FILE = nativenotes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

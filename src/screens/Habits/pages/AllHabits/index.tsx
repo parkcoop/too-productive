@@ -90,7 +90,7 @@ const AllHabits = ({ route, navigation }) => {
                                             horizontal
                                             contentContainerStyle={{
                                                 flexGrow: 1,
-                                                paddingRight: 25,
+                                                // paddingRight: 25,
                                             }}
                                         >
                                             <TouchableOpacity

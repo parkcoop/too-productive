@@ -26,7 +26,7 @@ const BottomTabBar: React.FC<any> = ({ navigation, state }) => {
     const theme = useTheme();
     return (
         <BottomNavigation
-            style={{ height: 75, backgroundColor: theme["color-primary-500"]}}
+            style={{ height: 60, backgroundColor: theme["color-primary-500"] }}
             indicatorStyle={{
                 backgroundColor: theme["color-secondary-600"],
                 borderRadius: 5,

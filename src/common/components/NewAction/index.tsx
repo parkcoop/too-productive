@@ -20,31 +20,31 @@ const NewAction: React.FC<NewActionProps> = ({ navigation }) => {
             <TouchableOpacity
                 activeOpacity={0.9}
                 onPress={() => {
-                    Vibration.vibrate(100);
+                    // Vibration.vibrate([1, 2, 3], false);
                     setPanelVisible(true);
                 }}
             >
                 <Layout
                     style={{
                         ...styles.buttonStyle,
-                        borderWidth: 5,
+                        borderWidth: 2.5,
                         borderColor: theme["color-basic-transparent-100"],
                         backgroundColor: theme["color-primary-100"],
-                        shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 3,
-                        },
-                        shadowOpacity: 0.53,
-                        shadowRadius: 4.97,
+                        // shadowColor: "#000",
+                        // shadowOffset: {
+                        //     width: 0,
+                        //     height: 3,
+                        // },
+                        // shadowOpacity: 0.53,
+                        // shadowRadius: 4.97,
 
-                        elevation: 5,
+                        // elevation: 5,
                     }}
                 >
                     <Icon
                         style={{
-                            width: 50,
-                            height: 50,
+                            width: 35,
+                            height: 35,
                             margin: 10,
                         }}
                         fill={theme["color-primary-500"]}
@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         fontSize: 23,
-        height: 90,
-        width: 90,
+        height: 75,
+        width: 75,
         // backgroundColor: '#CDCDCD',
         display: "flex",
         alignItems: "center",
