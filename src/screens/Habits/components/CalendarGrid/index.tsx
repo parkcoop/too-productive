@@ -18,7 +18,7 @@ type IndexPath = {
 
 interface Props {}
 
-const CalendarGrid: React.FC<Props> = ({ habit }) => {
+const CalendarGrid: React.FC<Props> = ({ habit, squareWidth, container }) => {
     if (!habit) return null;
     const theme = useTheme();
     const preRenderedCount = new Array(

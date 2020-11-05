@@ -15,7 +15,7 @@ import { SessionContext, ThemeContext } from "../../../../context";
 import { getHabits, saveHabit } from "../../../../api/Habits";
 import { CommonActions } from "@react-navigation/native";
 // import HabitTracker from "../../components/HabitTracker";
-
+import PageWrapper from "../../../../common/components/PageWrapper";
 interface Habit {
     label: string;
     color: string;
@@ -55,70 +55,73 @@ const AllHabits = ({ route, navigation }) => {
     }, [route.params]);
 
     return (
-        <Layout style={{ flex: 1, padding: 10 }}>
-            <SafeAreaView>
-                <Text style={{ fontSize: 30, marginBottom: 25 }}>
-                    Habit Tracking
-                </Text>
-                <ScrollView>
-                    <Layout style={{ width: "100%" }}>
-                        {habits &&
-                            habits.map((habit, i) => {
-                                return (
-                                    <Layout
-                                        key={i}
-                                        style={{
-                                            backgroundColor:
-                                                brightnessTheme === "dark"
-                                                    ? theme["color-basic-700"]
-                                                    : theme["color-basic-200"],
-                                            padding: 5,
-                                            margin: 10,
-                                            height: 175,
-                                            borderRadius: 7.5,
+        <PageWrapper>
+            <Text
+                style={{
+                    fontSize: 30,
+                    // marginBottom: 15,
+                    marginTop: 5,
+                    textAlign: "left",
+                    paddingLeft: 10,
+                }}
+            >
+                Habit Tracking
+            </Text>
+            <Layout style={{ width: "100%" }}>
+                {habits &&
+                    habits.map((habit, i) => {
+                        return (
+                            <Layout
+                                key={i}
+                                style={{
+                                    backgroundColor:
+                                        brightnessTheme === "dark"
+                                            ? theme["color-basic-700"]
+                                            : theme["color-basic-200"],
+                                    padding: 5,
+                                    margin: 10,
+                                    borderRadius: 7.5,
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        fontSize: 18,
+                                        margin: 10,
+                                    }}
+                                >
+                                    {habit.label}
+                                </Text>
+                                <ScrollView
+                                    horizontal
+                                    contentContainerStyle={{
+                                        flexGrow: 1,
+                                        // paddingRight: 25,
+                                    }}
+                                >
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate(
+                                                "HabitTracker",
+                                                { habit },
+                                            );
+                                            //     setHabit(habit);
+                                            //     setOpenHabit(true);
                                         }}
                                     >
-                                        <Text
-                                            style={{
-                                                fontSize: 18,
-                                                margin: 10,
-                                            }}
-                                        >
-                                            {habit.label}
-                                        </Text>
-                                        <ScrollView
-                                            horizontal
-                                            contentContainerStyle={{
-                                                flexGrow: 1,
-                                                // paddingRight: 25,
-                                            }}
-                                        >
-                                            <TouchableOpacity
-                                                onPress={() => {
-                                                    navigation.navigate(
-                                                        "HabitTracker",
-                                                        { habit },
-                                                    );
-                                                    //     setHabit(habit);
-                                                    //     setOpenHabit(true);
-                                                }}
-                                            >
-                                                <CalendarGrid habit={habit} />
-                                            </TouchableOpacity>
-                                        </ScrollView>
-                                    </Layout>
-                                );
-                            })}
-                    </Layout>
-                </ScrollView>
-                <ModalMenu
-                    visible={newHabitMenuVisible}
-                    setVisible={setNewHabitMenuVisible}
-                >
-                    <NewHabit saveUserHabit={saveUserHabit} />
-                </ModalMenu>
-            </SafeAreaView>
-        </Layout>
+                                        <CalendarGrid habit={habit} />
+                                    </TouchableOpacity>
+                                </ScrollView>
+                            </Layout>
+                        );
+                    })}
+            </Layout>
+            <ModalMenu
+                visible={newHabitMenuVisible}
+                setVisible={setNewHabitMenuVisible}
+            >
+                <NewHabit saveUserHabit={saveUserHabit} />
+            </ModalMenu>
+        </PageWrapper>
     );
 };
 

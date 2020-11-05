@@ -15,7 +15,7 @@ const Habits: React.FC<Props> = ({ navigation, route }) => {
             close: {
                 animation: "timing",
                 config: {
-                    duration: 155,
+                    duration: 50,
                 },
             },
         },
