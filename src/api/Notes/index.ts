@@ -11,7 +11,7 @@ const getNotes: (arg0: string) => Promise<{ data: [] }> = (
     userId: string,
 ) => {
     return axios
-        .get("http://192.168.86.218:5000/notes", {
+        .get("http://10.0.0.177:5000/notes", {
             params: {
                 userId,
             },
@@ -31,7 +31,7 @@ const getNotes: (arg0: string) => Promise<{ data: [] }> = (
 
 const saveNote: (arg0: NoteBody) => Promise<{}> = ({ userId, type, body }) => {
     return axios
-        .post("http://192.168.86.218:5000/notes", {
+        .post("http://10.0.0.177:5000/notes", {
             userId,
             type,
             body,

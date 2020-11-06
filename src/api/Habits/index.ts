@@ -11,7 +11,7 @@ const getHabits: (arg0: string) => Promise<{ data: [] }> = (
     userId: string,
 ) => {
     return axios
-        .get("http://192.168.86.218:5000/habits", {
+        .get("http://10.0.0.177:5000/habits", {
             params: {
                 userId,
             },
@@ -31,7 +31,7 @@ const getHabits: (arg0: string) => Promise<{ data: [] }> = (
 
 const saveHabit: (arg0: HabitBody) => Promise<{}> = ({ userId, label, color }) => {
     return axios
-        .post("http://192.168.86.218:5000/habits", {
+        .post("http://10.0.0.177:5000/habits", {
             userId,
             label,
             color,

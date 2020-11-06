@@ -1,12 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, { useEffect, useReducer, useState } from "react";
+import { NativeModules } from "react-native";
 import AppNavigator from "./src/routes";
 import * as eva from "@eva-design/eva";
 // import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -17,8 +10,9 @@ import FlashMessage from "react-native-flash-message";
 import moment from "moment";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { default as customTheme } from "./theme.json"; // <-- Import app theme
-import { default as mapping } from "./mapping.json"; // <-- Import ap
+import { default as customTheme } from "./theme.json";
+import { default as mapping } from "./mapping.json";
+
 interface User {
     readonly _id: string;
     readonly username: string;
@@ -37,7 +31,8 @@ type State = {
 };
 const App: React.FC = () => {
     const [theme, setTheme] = useState<string>("light");
-
+    let StringProvider = NativeModules.StringProvider;
+    console.log(StringProvider.getParkersString((data) => console.log(data)));
     const toggleTheme = async () => {
         const nextTheme = theme === "light" ? "dark" : "light";
         setTheme(nextTheme);
