@@ -1,11 +1,13 @@
-import { Icon, Layout, Text, useTheme } from "@ui-kitten/components";
-import React, { useEffect } from "react";
+import { NavigationState } from "@react-navigation/native";
+import { Icon, Input, Layout, Text, useTheme } from "@ui-kitten/components";
+import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
+import { NavigationParams, NavigationScreenProp } from "react-navigation";
 import PageWrapper from "../../../../common/components/PageWrapper";
 
-// interface Props {
-//     reminder: Reminder;
-// }
+interface Props {
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
 
 interface Reminder {
     reminderDate: string;
@@ -14,8 +16,11 @@ interface Reminder {
     _id: string;
 }
 
-const EditReminder: React.FC<{}> = ({ route, navigation }) => {
+const EditReminder: React.FC<Props> = ({ route, navigation }) => {
     const reminder: Reminder = route.params?.reminder;
+    const [description, setDescription] = useState<string>(
+        reminder.description,
+    );
     const theme = useTheme();
     return (
         <PageWrapper>
@@ -58,6 +63,12 @@ const EditReminder: React.FC<{}> = ({ route, navigation }) => {
                     fill={theme["color-primary-400"]}
                     name="trash-2-outline"
                 />
+            </Layout>
+            <Layout>
+                <Text>Description/Label</Text>
+                <Input value={description} onChangeText={setDescription} />
+                <Text>Date</Text>
+                <Input value={description} onChangeText={setDescription} />
             </Layout>
         </PageWrapper>
     );

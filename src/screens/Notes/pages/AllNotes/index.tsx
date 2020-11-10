@@ -1,44 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
-    Button,
     Layout,
     Text,
-    MenuItem,
-    OverflowMenu,
+    useTheme,
 } from "@ui-kitten/components";
+import { NavigationParams, NavigationScreenProp } from "react-navigation";
+import { NavigationState } from "@react-navigation/native";
 import ModalMenu from "../../../../common/components/ModalMenu";
 import NoteToSelf from "../../components/NoteToSelf";
-import { SessionContext } from "../../../../context";
+import { SessionContext, ThemeContext } from "../../../../context";
 import { getNotes, saveNote } from "../../../../api/Notes";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
-type IndexPath = {
-    row: number;
-    section?: number;
-};
+interface Props {
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
 
-const AllNotes = ({ route, navigation }) => {
+type Note = {
+    _id: string,
+    type: string,
+    body: string
+}
+
+const AllNotes: React.FC<Props> = ({ route, navigation }) => {
     const [existingNotes, setExistingNotes] = useState<[]>([]);
     const [newNoteVisible, setNewNoteVisible] = useState<boolean>(false);
-    const [newNoteMenuVisible, setNewNoteMenuVisible] = React.useState<boolean>(
-        false,
-    );
     const { session } = useContext(SessionContext);
+    const theme = useTheme();
+    const { theme: brightnessTheme } = useContext(ThemeContext);
 
-    const onItemSelect = (index: IndexPath) => {
-        console.log(index);
-        setNewNoteVisible(true);
-        setNewNoteMenuVisible(false);
-    };
-
-    const renderToggleButton = () => (
-        <Button
-            style={{ width: "50%" }}
-            onPress={() => setNewNoteMenuVisible(true)}
-        >
-            NEW NOTE
-        </Button>
-    );
 
     const saveUserNote = async (note: string) => {
         console.log("saving");
@@ -70,36 +61,37 @@ const AllNotes = ({ route, navigation }) => {
         <Layout style={{ flex: 1, padding: 15 }}>
             <SafeAreaView style={{ flex: 1 }}>
                 <Text style={{ fontSize: 23 }}>Notes</Text>
-                <OverflowMenu
-                    anchor={renderToggleButton}
-                    backdropStyle={{
-                        backgroundColor: "rgba(0,0,0,0.4)",
-                    }}
-                    visible={newNoteMenuVisible}
-                    fullWidth
-                    // selectedIndex={selectedIndex}
-                    style={{ width: "100%" }}
-                    onSelect={onItemSelect}
-                    onBackdropPress={() => setNewNoteMenuVisible(false)}
-                >
-                    <MenuItem title="Note to self" />
-                    {/* <MenuItem title="Workout log" /> */}
-                </OverflowMenu>
-                {existingNotes &&
-                    existingNotes.map((note) => {
-                        return (
-                            <Layout
-                                key={note._id}
-                                style={{
-                                    borderWidth: 1,
-                                    backgroundColor: "grey",
-                                }}
-                            >
-                                <Text>{note.type}</Text>
-                                <Text>{note.body}</Text>
-                            </Layout>
-                        );
-                    })}
+                <ScrollView>
+                    {existingNotes &&
+                        existingNotes.map((note: Note) => {
+                            return (
+                                <TouchableOpacity 
+                                    key={note._id}
+                                    onPress={() => {
+                                        navigation.navigate(
+                                            "EditNote",
+                                            { note },
+                                        );
+                                    }}
+                                >
+                                    <Layout
+                                        
+                                        style={{
+                                            backgroundColor:
+                                                brightnessTheme === "dark"
+                                                    ? theme["color-basic-700"]
+                                                    : theme["color-basic-200"],
+                                            padding: 10,
+                                            margin: 10,
+                                            borderRadius: 7.5,
+                                        }}
+                                    >
+                                        <Text>{note.body}</Text>
+                                    </Layout>
+                                </TouchableOpacity>
+                            );
+                        })}
+                        </ScrollView>
                 <ModalMenu
                     visible={newNoteVisible}
                     setVisible={setNewNoteVisible}

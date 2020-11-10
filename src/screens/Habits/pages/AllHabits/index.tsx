@@ -25,9 +25,9 @@ interface Habit {
 
 const AllHabits = ({ route, navigation }) => {
     const [userHabits, setUserHabits] = useState<Habit[]>([]);
-    const [newHabitVisible, setNewHabitVisible] = useState<boolean>(false);
-    const [habit, setHabit] = useState<Habit>();
-    const [openHabit, setOpenHabit] = useState<boolean>(false);
+    // const [newHabitVisible, setNewHabitVisible] = useState<boolean>(false);
+    // const [habit, setHabit] = useState<Habit>();
+    // const [openHabit, setOpenHabit] = useState<boolean>(false);
     const [newHabitMenuVisible, setNewHabitMenuVisible] = React.useState<
         boolean
     >(false);
@@ -68,8 +68,8 @@ const AllHabits = ({ route, navigation }) => {
                 Habit Tracking
             </Text>
             <Layout style={{ width: "100%" }}>
-                {habits &&
-                    habits.map((habit, i) => {
+                {userHabits &&
+                    userHabits.map((habit, i) => {
                         return (
                             <Layout
                                 key={i}

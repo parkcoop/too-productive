@@ -12,9 +12,6 @@ target 'nativenotes' do
   target 'nativenotesTests' do
     inherit! :complete
     # Pods for testing
-    pod 'React', path: "#{node_modules_path}/react-native"
-
-    pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
   end
 
   # Enables Flipper.

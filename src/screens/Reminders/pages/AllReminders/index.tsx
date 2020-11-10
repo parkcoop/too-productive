@@ -80,12 +80,14 @@ const AllReminders: React.FC = ({ route, navigation }) => {
                 />
                 <Text style={{ fontSize: 23 }}>Reminders</Text>
                 <TouchableOpacity
-                    style={{
-                        ...styles.listHeader,
+                     style={{
                         backgroundColor:
                             brightnessTheme === "dark"
-                                ? theme["color-basic-700"]
-                                : theme["color-basic-200"],
+                                ? theme["color-basic-800"]
+                                : theme["color-basic-100"],
+                        padding: 10,
+                        margin: 10,
+                        borderRadius: 7.5,
                     }}
                     onPress={() =>
                         setUpcomingRemindersCollapsed(
@@ -109,14 +111,13 @@ const AllReminders: React.FC = ({ route, navigation }) => {
                                     <Layout
                                         key={reminder._id}
                                         style={{
-                                            // borderWidth: 1,
                                             backgroundColor:
                                                 brightnessTheme === "dark"
-                                                    ? theme["color-basic-600"]
+                                                    ? theme["color-basic-700"]
                                                     : theme["color-basic-200"],
-                                            borderColor: "#CDCDCD",
+                                            padding: 10,
                                             margin: 10,
-                                            padding: 5,
+                                            borderRadius: 7.5,
                                         }}
                                     >
                                         <Text>
@@ -133,11 +134,13 @@ const AllReminders: React.FC = ({ route, navigation }) => {
                 </Collapsible>
                 <TouchableOpacity
                     style={{
-                        ...styles.listHeader,
                         backgroundColor:
                             brightnessTheme === "dark"
-                                ? theme["color-basic-700"]
-                                : theme["color-basic-200"],
+                                ? theme["color-basic-800"]
+                                : theme["color-basic-100"],
+                        padding: 10,
+                        margin: 10,
+                        borderRadius: 7.5,
                     }}
                     onPress={() =>
                         setPreviousRemindersCollapsed(
@@ -154,10 +157,13 @@ const AllReminders: React.FC = ({ route, navigation }) => {
                                 <Layout
                                     key={reminder._id}
                                     style={{
-                                        borderWidth: 1,
-                                        borderColor: "#CDCDCD",
+                                        backgroundColor:
+                                            brightnessTheme === "dark"
+                                                ? theme["color-basic-700"]
+                                                : theme["color-basic-200"],
+                                        padding: 10,
                                         margin: 10,
-                                        padding: 5,
+                                        borderRadius: 7.5,
                                     }}
                                 >
                                     <Text>

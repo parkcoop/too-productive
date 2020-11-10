@@ -31,8 +31,8 @@ type State = {
 };
 const App: React.FC = () => {
     const [theme, setTheme] = useState<string>("light");
-    let StringProvider = NativeModules.StringProvider;
-    console.log(StringProvider.getParkersString((data) => console.log(data)));
+    // let StringProvider = NativeModules.StringProvider;
+    // console.log(StringProvider.getParkersString((data) => console.log(data)));
     const toggleTheme = async () => {
         const nextTheme = theme === "light" ? "dark" : "light";
         setTheme(nextTheme);
